@@ -1,3 +1,7 @@
+[![GitHub license](https://img.shields.io/badge/license-BSD-blue.svg)](https://raw.githubusercontent.com/njaard/wordnet-rs/master/LICENSE)
+[![Crates.io](https://img.shields.io/crates/v/wordnet.svg)](https://crates.io/crates/wordnet)
+[![Documentation](https://docs.rs/wordnet/badge.svg)](https://docs.rs/wordnet)
+
 # Introduction
 
 This is a parser for [Wordnet](https://wordnet.princeton.edu/)
