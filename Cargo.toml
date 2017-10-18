@@ -1,0 +1,12 @@
+[package]
+name = "wordnet"
+version = "0.1.0"
+authors = ["Kalle Samuels <charles@derkarl.org>"]
+description = "Read a wordnet dictionary in Rust"
+documentation = "https://docs.rs/wordnet/"
+repository = "https://github.com/njaard/wordnet"
+readme = "Readme.md"
+keywords = [ "wordnet", "nlp", "dictionary" ]
+license = "BSD-2-Clause"
+
+[dependencies]
