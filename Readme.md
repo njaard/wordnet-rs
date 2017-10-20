@@ -2,6 +2,10 @@
 [![Crates.io](https://img.shields.io/crates/v/wordnet.svg)](https://crates.io/crates/wordnet)
 [![Documentation](https://docs.rs/wordnet/badge.svg)](https://docs.rs/wordnet)
 
+	[dependencies]
+	wordnet = "0.1"
+
+
 # Introduction
 
 This is a parser for [Wordnet](https://wordnet.princeton.edu/)
@@ -19,6 +23,17 @@ Here are the unimplemented features:
 * verb sentences
 * many more things
 * There may be some `Send` and `Sync` traits that could be applied.
+
+# Example
+
+	let senses = wn.senses("horse");
+	senses[0]
+		.pointers.iter()
+		.filter(|p| p.relationship == wordnet::Relationship::Hypernym)
+		.map(|p| p.read())
+		.for_each( |e| println!("a horse is a {}", e.synonyms[0].word));
+
+	Output: A horse is an equine
 
 # Robustness
 If the database is corrupt then the library may panic.
