@@ -5,7 +5,6 @@
 	[dependencies]
 	wordnet = "0.1"
 
-
 # Introduction
 
 This is a parser for [Wordnet](https://wordnet.princeton.edu/)
@@ -23,6 +22,7 @@ Here are the unimplemented features:
 * verb sentences
 * many more things
 * There may be some `Send` and `Sync` traits that could be applied.
+* Source-breaking changes will follow semantic versioning.
 
 # Example
 

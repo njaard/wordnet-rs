@@ -47,8 +47,16 @@ pub enum PartOfSpeech
 	Adverb,
 }
 
+
+/// noun, adjective, verb, adverb
 impl PartOfSpeech
 {
+	/// Returns a short dictionary-like label:
+	///
+	/// * n
+	/// * adj
+	/// * v
+	/// * adv
 	pub fn short(&self) -> &'static str
 	{
 		match *self
@@ -76,6 +84,7 @@ fn part_of_speech_code_to_part_of_speech(code : &[u8])
 	}
 }
 
+/// Relates one word to another semantically
 #[derive(Debug)]
 #[derive(PartialEq)]
 pub enum Relationship
@@ -173,6 +182,7 @@ fn relationship_code_to_relationship(code : &[u8])
 
 
 /// Senses are different definitions or etymologies for a word.
+///
 /// The senses are also arranged by part of speech. For example,
 /// "bank" has many senses, one is a verb that means "to count on something",
 /// another is a noun that refers to the financial institution.
@@ -183,7 +193,7 @@ pub struct Sense<'db>
 {
 	/// The part of speech that this sense has
 	pub part_of_speech : PartOfSpeech,
-	/// A short text written in prose that defines the word
+	/// A short dictionary-like text written in prose that describes the word
 	pub gloss : String,
 	/// Ways to write this sense, one of which is
 	/// probably the word you passed to `Database::senses()`
@@ -192,6 +202,10 @@ pub struct Sense<'db>
 	pub pointers : Vec<PointerRef<'db>>,
 }
 
+/// Connects a Sense to words that relationship
+///
+/// A PointerRef has not been loaded from the database yet. You
+/// can call `read()` to do that.
 #[derive(Debug)]
 pub struct PointerRef<'db>
 {
@@ -205,6 +219,7 @@ pub struct PointerRef<'db>
 	offset : u64,
 }
 
+///
 impl<'db> PointerRef<'db>
 {
 	/// Read this pointer from the database files.
@@ -504,7 +519,7 @@ impl DBFile
 }
 
 
-
+/// Represents a Wordnet database directory
 #[derive(Debug)]
 pub struct Database
 {
