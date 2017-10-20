@@ -9,6 +9,6 @@ fn main()
 		.pointers.iter()
 		.filter(|p| p.relationship == wordnet::Relationship::Hypernym)
 		.map(|p| p.read())
-		.for_each( |e| println!("a horse is a {}", e.synonyms[0].word));
+		.for_each( |e| println!("a horse is an {}", e.synonyms[0].word));
 }
 
