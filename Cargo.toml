@@ -1,6 +1,6 @@
 [package]
 name = "wordnet"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Kalle Samuels <charles@derkarl.org>"]
 description = "Read a wordnet dictionary in Rust"
 documentation = "https://docs.rs/wordnet/"
