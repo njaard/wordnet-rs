@@ -533,46 +533,58 @@ impl Database
 	/// On Debian, these files are present in `/usr/share/wordnet`
 	/// and can be installed from the package `wordnet-base`.
 	pub fn open(path : &std::path::Path)
-		-> Option<Database>
+		-> std::io::Result<Database>
 	{
 		let mut db = Database { db_files: vec!() };
 
-		for e in std::fs::read_dir(path).unwrap()
+		for e in std::fs::read_dir(path)?
 		{
-			let entry = e.unwrap();
+			let entry = e?;
 			let path_buf = entry.path();
 			if path_buf.file_stem().unwrap_or(std::ffi::OsStr::new(""))
 				== std::ffi::OsStr::new("index")
 			{
+				let ex = path_buf.extension().ok_or(std::io::Error::new(
+					std::io::ErrorKind::InvalidData,
+					"file with invalid part of speech".to_string()
+				))?;
 				let part_of_speech
-					= if path_buf.extension().unwrap() == "noun"
+					= if ex == "noun"
 						{ PartOfSpeech::Noun }
-					else if path_buf.extension().unwrap() == "verb"
+					else if ex == "verb"
 						{ PartOfSpeech::Verb }
-					else if path_buf.extension().unwrap() == "adv"
+					else if ex == "adv"
 						{ PartOfSpeech::Adverb }
-					else if path_buf.extension().unwrap() == "adj"
+					else if ex == "adj"
 						{ PartOfSpeech::Adjective }
 					else
-						{ return None; };
+					{
+						return Err(std::io::Error::new(
+							std::io::ErrorKind::InvalidData,
+							"file with invalid part of speech"
+						));
+					};
 
 				let mut data_path = path_buf.with_file_name("data");
-				data_path.set_extension(path_buf.extension().unwrap());
+				data_path.set_extension(ex);
 				db.db_files.push( DBFile::new(
 					part_of_speech,
 					path_buf.as_path(),
 					data_path.as_path(),
-				).unwrap() );
+				)? );
 			}
 		}
 
 		if db.db_files.len() == 0
 		{
-			None
+			Err(std::io::Error::new(
+				std::io::ErrorKind::InvalidData,
+				"file with invalid part of speech"
+			))
 		}
 		else
 		{
-			Some(db)
+			Ok(db)
 		}
 	}
 
